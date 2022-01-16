@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+
+{% block header %}{% endblock %}
+{% block nav %}{% endblock %}
+
+{% block content %}
+<div class="span8 offset2">
+    {% block redirect_text %}{% endblock %}
+    <a href="{%  url 'main' %}">Перейти на главную</a>
+</div>
+{% endblock %}

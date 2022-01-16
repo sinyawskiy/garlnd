@@ -1,0 +1,10 @@
+#column_1{
+    width:100%;
+}
+
+#column_2, #column_3{
+    display:none;
+}
+div.g-d-c{
+    width:100% !important;
+}

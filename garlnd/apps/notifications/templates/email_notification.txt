@@ -1,0 +1,33 @@
+{% for notification in notifications %}
+
+{{ notification.created_at|date:'Y-m-d H:i:s' }} произошло событие "{{ notification.rule.title }}" ({{ notification.rule.get_rule_type_title }}, {{ notification.rule.device }}).
+
+{% if notification.rule.rule_type == 1 %}
+Координаты трэкера при выходе из гео-зоны:
+    Широта: {{ notification.position.latitude|floatformat:6 }}
+    Долгота: {{ notification.position.longitude|floatformat:6 }}
+{% else %}
+    {% if notification.rule.rule_type == 2 %}
+Координаты трэкера при входе в гео-зону:
+    Широта: {{ notification.position.latitude|floatformat:6 }}
+    Долгота: {{ notification.position.longitude|floatformat:6 }}
+    {% else %}
+        {% if notification.rule.rule_type == 3 %}
+Скорость при начале движения (км/ч): {{ notification.position.speed|floatformat:2 }}
+        {% else %}
+            {% if notification.rule.rule_type == 4 %}
+Граничная скорость (км/ч): {{ notification.rule.max_speed|floatformat:2 }}
+{% if notification.position %}Зафиксированная скорость (км/ч): {{ notification.position.speed|floatformat:2 }}{% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+Чтобы изменить правило пройдите по ссылке:
+{{ protocol }}://{{ domain }}{% url 'edit_rule' notification.rule_id %}
+
+{% endfor %}
+-------------------------------------------------------
+Это автоматическое письмо, не отвечайте на него.
+-------------------------------------------------------
+С уважением, администрация garlnd.ru

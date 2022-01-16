@@ -1,0 +1,11 @@
+td span.rule_dates{
+    cursor: pointer;
+}
+
+td.rule_actions a, td.rule_actions input{
+    clear:both;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    position: relative;
+    display: block;
+}

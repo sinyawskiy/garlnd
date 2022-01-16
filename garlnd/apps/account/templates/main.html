@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+{% endblock %}
+
+{% block css %}
+    <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky py-3">
+            <ul class="nav flex-column">
+                {% url 'maps_list' as maps_list_url %}
+                <li class="nav-item{% if request.user.get_maps_count < request.user.max_maps_count %} with_sub{% endif %}{% if request.path == maps_list_url %} active{% endif %}">
+                    <a class="nav-link" href="{{ maps_list_url }}">Карты ({{ request.user.get_maps_count }}/{% if request.user.max_maps_count != None %}{{ request.user.max_maps_count }}{% else %}<span class="infinity">&infin;</span>{% endif %})</a>
+                    {% if request.user.get_maps_count < request.user.max_maps_count or request.user.max_maps_count == None %}
+                        {% url 'map_add' as map_add_url %}
+                        <a href="{{ map_add_url }}" class="sub{% if request.path == map_add_url %} active{% endif %}" title="Добавить карту"><i class="bi bi-plus"></i></a>
+                    {% endif %}
+                </li>
+                {% url 'devices_list' as devices_list_url %}
+                <li class="nav-item {% if request.user.get_devices_count < request.user.max_devices_count or request.user.max_devices_count == None %} with_sub{% endif %}{% if request.path == devices_list_url %} active{% endif %}">
+                    <a class="nav-link" href="{{ devices_list_url }}">Трэкеры ({{ request.user.get_devices_count }}/{% if request.user.max_devices_count != None %}{{ request.user.max_devices_count }}{% else %}<span class="infinity">&infin;</span>{% endif %})</a>
+                    {% if request.user.get_devices_count < request.user.max_devices_count or request.user.max_devices_count == None %}
+                        {% url 'add_device' as add_device_url %}
+                        <a href="{{ add_device_url }}" class="sub{% if request.path == add_device_url %} active{% endif %}" title="Добавить трэкер"><i class="bi bi-plus"></i></a>
+                    {% endif %}
+                </li>
+                {% url 'tracks_list' as tracks_list_url %}
+                <li class="nav-item {% if request.user.get_tracks_count < request.user.max_tracks_count or request.user.max_tracks_count == None %} with_sub{% endif %}{% if request.path == tracks_list_url %} active{% endif %}">
+                    <a class="nav-link" href="{{ tracks_list_url }}">Треки ({{ request.user.get_tracks_count }}/{% if request.user.max_tracks_count != None %}{{ request.user.max_tracks_count }}{% else %}<span class="infinity">&infin;</span>{% endif %})</a>
+                    {% if request.user.get_tracks_count < request.user.max_tracks_count or request.user.max_tracks_count == None %}
+                        {% url 'add_track' as add_track_url %}
+                        <a href="{{ add_track_url }}" class="sub{% if request.path == add_track_url %} active{% endif %}" title="Добавить трэк"><i class="bi bi-plus"></i></a>
+                    {% endif %}
+                </li>
+                {% url 'rules_list' as rules_list_url %}
+                <li class="nav-item {% if request.user.get_rules_count < request.user.max_rules_count or request.user.max_rules_count == None %} with_sub{% endif %}{% if request.path == rules_list_url %} active{% endif %}">
+                    <a class="nav-link" href="{{ rules_list_url }}">Правила ({{ request.user.get_rules_count }}/{% if request.user.max_rules_count != None %}{{ request.user.max_rules_count }}{% else %}<span class="infinity">&infin;</span>{% endif %})</a>
+                    {% if request.user.get_rules_count < request.user.max_rules_count or request.user.max_rules_count == None %}
+                        {% url 'add_rule' as add_rule_url %}
+                        <a href="{{ add_rule_url }}" class="sub{% if request.path == add_rule_url %} active{% endif %}" title="Добавить правило"><i class="bi bi-plus"></i></a>
+                    {% endif %}
+                </li>
+{#                {% url 'graticules_list' as graticules_list_url %}#}
+{#                <li class="nav-item {% if request.user.get_graticules_count < request.user.max_graticules_count or request.user.max_graticules_count == None %} with_sub{% endif %}{% if request.path == graticules_list_url %} active{% endif %}">#}
+{#                    <a class="nav-link" href="{{ graticules_list_url }}">Сети ({{ request.user.get_graticules_count }}/{% if request.user.max_graticules_count != None %}{{ request.user.max_graticules_count }}{% else %}<span class="infinity">&infin;</span>{% endif %})</a>#}
+{#                    {% if request.user.get_graticules_count < request.user.max_rules_count or request.user.max_rules_count == None %}#}
+{#                        {% url 'add_graticule' as add_graticule_url %}#}
+{#                        <a href="{{ add_graticule_url }}" class="sub{% if request.path == add_graticule_url %} active{% endif %}" title="Добавить сеть"><i class="bi bi-plus"></i></a>#}
+{#                    {% endif %}#}
+{#                </li>#}
+            </ul>
+            {% if user.get_events_count or user.get_positions_count or user.get_notifications_count %}
+            <hr>
+            <ul class="nav flex-column">
+                {% if user.get_positions_count %}
+                <li class="nav-item">Путевые точки ({{ user.get_positions_count }})</li>
+                {% endif %}
+                {% if user.get_notifications_count %}
+                <li class="nav-item">Инциденты ({{ user.get_notifications_count }})</li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+        </nav>
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">{% block sub_content %}{% endblock %}</main>
+    {% else %}
+        {% include 'hero_page.html' %}
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends 'confirm_delete.html' %}
+
+{% block confirm_text %}{{ block.super }} карту &laquo;{{ object.title }}&raquo;?{% endblock %}
+
+{% block submit_button %}{{ block.super }}{% endblock %}

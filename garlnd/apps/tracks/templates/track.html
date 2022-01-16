@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block js %}
+    <script src="{{ STATIC_URL }}js/socket.io/socket.io.js"></script>
+    <script src="{{ STATIC_URL }}leaflet/leaflet.js"></script>
+    <script src="{{ STATIC_URL }}markercluster/js/leaflet.markercluster.js"></script>
+    <script src="{{ STATIC_URL }}leafletlabel/js/leaflet.label.js"></script>
+    <script src="{{ STATIC_URL }}js/track.js"></script>
+    <script>
+        if(typeof(Garlnd) === 'undefined'){Garlnd={};}
+        if(typeof(Garlnd.App) === 'undefined'){Garlnd.App={};}
+        Garlnd.App.device = { 'device_id': {{ object.device.id }}, 'title': '{{ object.device.title }}','image': '{{ object.device.get_image }}', 'width': {{ object.device.width }}, 'color': '{{ object.device.get_color }}'};
+        Garlnd.App.positions = [{% for position in object.get_positions %}{ 'coordinates': [{{ position.latitude|safe }}, {{ position.longitude|safe }}], 'created_at': '{{ position.created_at|date:'Y-m-d H:i:s' }}','speed': {{ position.get_speed|safe }}, 'distance': {{ position.distance|safe }}, 'duration': {{ position.duration|safe }} }{% if not forloop.last %},{% endif %}{% endfor %}];
+        Garlnd.App.staticUrl = '{{ STATIC_URL }}';
+        Garlnd.App.trackId = {{ object.id }};
+        Garlnd.App.initialCenter = [{{ initialCenter.latitude|safe }},{{ initialCenter.longitude|safe }}];
+        Garlnd.App.initialZoom = {{ initialCenter.zoom }};
+        Garlnd.App.viewPassword = '{{ object.view_password }}';
+        Garlnd.App.timeDeltaBetweenTracks = {{ time_delta_between_tracks }};
+    </script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
+    <link href="{{ STATIC_URL }}markercluster/css/MarkerCluster.css" rel="stylesheet" type="text/css" media="screen, projection">
+    <link href="{{ STATIC_URL }}markercluster/css/MarkerCluster.Default.css" rel="stylesheet" type="text/css" media="screen, projection">
+    <link href="{{ STATIC_URL }}leafletlabel/css/leaflet.label.css" rel="stylesheet" type="text/css" media="screen, projection">
+    <link href="{{ STATIC_URL }}css/track.css" rel="stylesheet" type="text/css" media="screen, projection">
+{% endblock %}
+
+{% block title %}{{ block.super }} – {{ object.title }}{% endblock %}
+
+{% block navigation %}
+<nav>
+    <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+        <div class="container-float">
+            <div class="triangle">
+                <div class="circle one"></div>
+                <div class="circle two"></div>
+                <div class="circle three"></div>
+            </div>
+            <a class="brand" href="/" title="GARLND мониторинг">G&Lambda;RLND</a>
+            <span class="subtitle" {% if object.description %}title="{{ object.description }}"{% endif %}> &#8211; {{ object.title }} ({{ object.start_date|date:"Y.m.d H:i:s" }} - {{ object.end_date|date:"Y.m.d H:i:s" }})</span>
+            <div class="controls-row">
+            {% if not user.is_authenticated %}
+            <ul class="nav">
+                <li{% if request.path == '/register/' %} class="active"{% endif %}><a href="/register/">Бесплатная регистрация</a></li>
+            </ul>
+            {% endif %}
+
+            {% if can_edit_track %}
+            <ul class="nav">
+                <li><a href="{% url 'edit_track' object.id %}">Редактировать</a></li>
+            </ul>
+            {% endif %}
+
+            <ul class="nav pull-right">
+            {% if user.is_authenticated %}
+{#                <li{% if request.path == '/account/' %} class="active"{% endif %}><a href="/">Профиль</a></li>#}
+                <li{% if request.path == '/password/change/' %} class="active"{% endif %}><a href="/password/change/">Сменить пароль</a></li>
+                <li><a href="/logout/">Выход</a></li>
+            {% else %}
+                <li{% if request.path == '/password/reset/' %} class="active"{% endif %}><a href="/password/reset/">Восстановить пароль</a></li>
+                <li{% if request.path == '/login/' %} class="active"{% endif %}><a href="/login/">Авторизация</a></li>
+            {% endif %}
+            </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+
+{% block container_main %}
+<div class="container-fluid map_container">
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div id="footer">
+    <div class="container-fluid">
+        <ul class="foot_links">
+            <li><p class="muted "><a href="/agreement/">Пользовательское соглашение</a></p></li>
+            <li><p class="muted ">Сделано <a href="http://sinyawskiy.ru">ALS</a></p></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

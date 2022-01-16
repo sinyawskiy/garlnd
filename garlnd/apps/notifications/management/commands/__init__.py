@@ -1,0 +1,1 @@
+__author__ = 'Alex V. Sinyawskiy <sinyawskiy@gmail.com>'

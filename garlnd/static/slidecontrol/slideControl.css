@@ -1,0 +1,54 @@
+.slideControl{
+    display:block;
+}
+
+.slideControlContainer {
+    height: 10px;
+    background: #efefef;
+    border-radius: 7px;
+    cursor: pointer;
+    position: relative;
+    width: 340px;
+    float: left;
+    margin: 9px 10px 0 0;
+    border: 1px solid #cccccc;
+}
+	
+.slideControlFill {
+	background: #0088cc; /*#ea5507; /* Old browsers */
+	display:block;
+	height:100%;
+	border-radius:7px;
+	position:relative;
+	z-index:1;
+	overflow:visible !important;
+}
+	
+.slideControlHandle {
+    display: block;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #cccccc;
+    position: absolute;
+    right: -7px;
+    top: -5px;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.slideControlInput {
+	width:35px;
+	font-size:1.5em;
+	padding:3px 5px;
+	border-radius:5px;
+	text-align:center;
+	color:#333;
+	font-weight:bold;
+}
+
+label.inline{
+    display: inline-block;
+    margin-left:10px;
+}

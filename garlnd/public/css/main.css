@@ -1,0 +1,86 @@
+div.hero-unit{
+    margin-top: 30px;
+    position:relative;
+    background-color: #53B45F;
+}
+
+i.hero{
+    padding-right: 20px;
+}
+
+div.hero-unit div.star{
+    display:none;
+    position:absolute;
+    /*background: url('/static/img/star.svg') no-repeat;*/
+    /*background-size: contain;*/
+    /*opacity: 0.5;*/
+}
+
+div.hero-unit div.star.one{
+    border-radius: 25px;
+    left:320px;
+    top: 40px;
+    width: 50px;
+    height: 50px;
+}
+
+div.hero-unit div.star.two{
+    border-radius: 35px;
+    left: 40%;
+    bottom: 10px;
+    width: 70px;
+    height: 70px;
+}
+
+div.hero-unit div.star.three{
+    border-radius: 45px;
+    top: 10px;
+    right: 20px;
+    width: 90px;
+    height: 90px;
+}
+
+.nav {
+    font-size: 13px !important;
+}
+
+.nav > li.with_sub{
+    position: relative;
+    margin-right: 40px;
+}
+
+.nav > li.with_sub a{
+    white-space: nowrap;
+}
+
+.nav > li > a.sub {
+    position: absolute;
+top: 2px;
+right: -40px;
+padding: .375rem;
+}
+
+.nav > .active > a.sub{
+    color: #0088cc;
+    background-color: white;
+}
+
+.nav > .active > a.sub:hover{
+    background-color: #eeeeee;
+    color: #005580;
+}
+
+span.infinity{
+    font-size: 2em;
+    position: relative;
+    top: 3.5px;
+}
+
+/*.nav-pills > li > a.sub.active{*/
+    /*color: #ffffff;*/
+    /*background-color: #0088cc;*/
+/*}*/
+
+/*.main ul.nav{*/
+    /*min-width: 165px;*/
+/*}*/

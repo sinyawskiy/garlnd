@@ -1,0 +1,19 @@
+{% if prepend %}
+    {% if append %}
+        <div class="input-prepend input-append">
+            <span class="add-on">{{ prepend }}</span>{{ field }}<span class="add-on">{{ append }}</span>
+        </div>
+    {% else %}
+        <div class="input-prepend">
+            <span class="add-on">{{ prepend }}</span>{{ field }}
+        </div>
+    {% endif %}
+{% else %}
+    {% if append %}
+        <div class="input-append{% for append_class in bootstrap.append_classes %} {{ append_class }}{% endfor %}">
+            {{ field }}<span class="add-on{% for append_element_class in bootstrap.append_element_classes %} {{ append_element_class }}{% endfor %}">{{ append }}</span>
+        </div>
+    {% else %}
+        {{ field }}
+    {% endif %}
+{% endif %}

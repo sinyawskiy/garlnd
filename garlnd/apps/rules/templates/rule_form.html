@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}leaflet/leaflet.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}slidecontrol/slideControl.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/rule_form.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}leaflet/leaflet.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/locales/bootstrap-datetimepicker.ru.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-maskedinput/jquery.maskedinput.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}slidecontrol/jquery.slideControl.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/rule_form.js"></script>
+    <script>
+        if(typeof(Garlnd) === 'undefined'){Garlnd={};}
+        if(typeof(Garlnd.App) === 'undefined'){Garlnd.App={};}
+        Garlnd.App.initialZoom = {{ initial_map_zoom }};
+        Garlnd.App.initialCenter = [{{ initial_latitude|safe }}, {{ initial_longitude|safe }}];
+    </script>
+{% endblock %}
+
+
+{% block sub_content %}
+<h1>{% if change %}Редактирование{% else %}Создание{% endif %} правила {{ track.title }}</h1>
+<hr>
+<form class="form-horizontal" action="" data-ajax="false" method="post">
+    {% csrf_token %}
+{#    {% bootstrap_form rule_form layout='horizontal' %}#}
+    {% for field in rule_form %}
+        {% bootstrap_field field layout='horizontal' %}
+        {% if field.name == 'distance_offset' %}
+        <div class="control-group" style="display:none;">
+            <label class="control-label" for="id_map_rule">Центр карты</label>
+            <div class="controls">
+                <div id="map_rule"></div>
+                <span class="help-block">Сконфигурируйте гео-зону на карте, оповещение приходит при пересечении границы</span>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="{% if change %}Сохранить{% else %}Создать{% endif %}" class="btn btn-primary">
+        </div>
+    </div>
+</form>
+{% endblock %}

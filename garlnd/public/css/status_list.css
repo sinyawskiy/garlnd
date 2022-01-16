@@ -1,0 +1,9 @@
+td.marker{
+    background-color: #aed1a0 !important;
+    text-align: center;
+    width: 141px;
+}
+
+td.marker img{
+    width:30px;
+}

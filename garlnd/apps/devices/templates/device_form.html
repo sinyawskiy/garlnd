@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}jquery-minicolors/jquery.minicolors.css" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}jquery-minicolors/jquery.minicolors.js"></script>
+    <script src="{{ STATIC_URL }}js/device_form.js"></script>
+{% endblock %}
+
+{% block sub_content %}
+<h1>{% if change %}Редактирование{% else %}Создание{% endif %} GPS трэкера {% if change %}ID: {{ device_id }}{% endif %}</h1>
+<hr>
+<form class="form-horizontal" action="" enctype="multipart/form-data" data-ajax="false" method="post">
+    {% csrf_token %}
+    {% bootstrap_form device_form %}
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="{% if change %}Сохранить{% else %}Создать{% endif %}" class="btn btn-primary">
+        </div>
+    </div>
+</form>
+{% endblock %}

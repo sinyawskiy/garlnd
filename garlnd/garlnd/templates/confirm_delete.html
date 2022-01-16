@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block header %}{% endblock %}
+{% block nav %}{% endblock %}
+
+{% block content %}
+<div class="well span4 offset4">
+    <legend>{% block confirm_text %}Вы точно хотите удалить{% endblock %}{% block confirm_info %}{% endblock %}</legend>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <button type="submit" name="submit" class="btn btn-large btn-danger login">{% block submit_button %}Да, да удалить.{% endblock %}</button>
+    </form>
+</div>
+{% endblock %}

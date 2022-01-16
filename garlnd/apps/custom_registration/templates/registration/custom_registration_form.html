@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/register.js"></script>
+{% endblock %}
+
+{% block css %}
+    <link href="{{ STATIC_URL }}css/register.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="well mx-auto mt-4">
+    {% if form.non_field_errors or form.errors %}
+    <legend class="error">Упс!</legend>
+        {% if form.non_field_errors %}
+        <div class="alert alert-error">
+            <p>{{ form.non_field_errors }}</p>
+            <a class="close" href="#" data-dismiss="alert"><i class="icon-remove"></i></a>
+        </div>
+        {% endif %}
+    {% else %}
+    <legend>Регистрация</legend>
+    {% endif %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% for field in form %}
+            {% bootstrap_field field show_label=False %}
+            {% if field.errors %}{{ field.errors }}{% endif %}
+        {% endfor %}
+        <button type="submit" name="submit" class="btn btn-lrg btn-success w-100">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

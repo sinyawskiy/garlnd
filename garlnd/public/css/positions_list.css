@@ -1,0 +1,10 @@
+tr.is_broken td{
+    text-decoration: line-through;
+}
+.dl-horizontal dt {
+    width: 190px;
+}
+
+.dl-horizontal dd {
+    margin-left: 200px;
+}

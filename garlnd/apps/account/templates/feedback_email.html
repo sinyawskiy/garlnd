@@ -1,0 +1,10 @@
+<p><b>E-mail отправителя:</b> {{ user_email }}</p>
+<p><b>Тема сообщения:</b> {{ user_subject }}</p>
+<p><b>Сообщение:</b></p>
+<p>{{ text }}</p>
+<p><b>Информация о пользователе:</b></p>
+<p>{{ user_info }}</p>
+{% if browser_info %}
+<p><b>Информация о браузере:</b></p>
+<p>{{ browser_info }}</p>
+{% endif %}

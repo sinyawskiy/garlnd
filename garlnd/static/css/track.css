@@ -1,0 +1,24 @@
+nav div.container-fluid{
+    padding-right: 0;
+    padding-left: 0;
+}
+
+a.brand, #map_refresh div.btn{
+    color: #08c !important;
+}
+
+div.map_container{
+    margin-top: 10px;
+}
+
+span.subtitle{
+    display: block;
+    float: left;
+    padding: 10px 20px 10px;
+    padding-left: 0;
+    margin-left: -13px;
+    font-size: 20px;
+    font-weight: 200;
+    text-shadow: 0 1px 0 #ffffff;
+    color: #08c;
+}

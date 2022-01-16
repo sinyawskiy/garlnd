@@ -1,0 +1,14 @@
+**.svn
+**.idea
+**~
+**.pyc
+**.settings
+logs/**
+**.log
+media/cache**
+*.ids
+*local_settings.py
+db.sqlite3
+local_settings.xml
+upload_tmp
+media/*

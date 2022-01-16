@@ -1,0 +1,22 @@
+td.marker{
+    background-color: #aed1a0 !important;
+    text-align: center;
+    width: 141px;
+}
+
+td.marker div.marker_container{
+    position: relative;
+}
+
+td.marker div.marker_container div.line{
+    left:20px;
+    width:100px;
+    position: absolute;
+    top:50%;
+    transform:rotate(-7deg);
+    -webkit-transform:rotate(-7deg);
+}
+
+td.marker div.marker_container img{
+    position: relative;
+}

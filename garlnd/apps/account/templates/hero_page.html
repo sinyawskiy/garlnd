@@ -1,0 +1,45 @@
+<div class="row">
+<div class="col">
+<div class="hero-unit p-4 p-md-5 mb-4 rounded">
+            <div class="star one"></div>
+            <div class="star two"></div>
+            <div class="star three"></div>
+            <h1>G&Lambda;RLND</h1>
+            <p>веб-приложение для отображения динамической информации на карте. Миссия - визуализация данных систем мониторинга.</p>
+        </div>
+</div>
+</div>
+        {% if show_demo_map %}
+        <div class="row">
+            <div class="col-sm">
+                <h2><i class="icon-eye-open hero"></i>Демо</h2>
+                <p>Простейшим примером работы служит мониторинг оборудования с привязкой к карте</p>
+                <p class="text-right"><a class="btn btn-outline-primary" href="http://garlnd.ru/maps/1/">Посмотреть</a></p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-sm">
+                <h2><i class="icon-map-marker hero"></i>Трэкинг</h2>
+                <p>Отслеживание местоположения объекта на карте. G&Lambda;RLND в реальном времени ведет наблюдение за подключенными к системе GPS устройствами. Вы можете видеть все передвижения объекта и сопутствующую статистику (время, скорость).</p>
+            </div>
+            <div class="col-sm">
+                <h2><i class="icon-download-alt hero"></i>Экcпорт треков</h2>
+                <p>Обменивайтесь гео-информацией друг с другом. Вы можете сформировать трэк и показать его на сайте. Также предусмотрена функция экспорта GPS трэков в форматах GPX и KML. Вся информация защищена настройками приватности.</p>
+            </div>
+            <div class="col-sm">
+                <h2><i class="icon-flag hero"></i>Оповещение</h2>
+                <p>Гео-зона, начало движения и лимит скорости. При помощи этих функций вы можете определить правила, согласно которым вы будете получать уведомления. Функция &laquo;начало движения&raquo; специально разработана для охраны транспортного средства. С помощью функции &laquo;гео-зона&raquo; легко следить за передвижениями ребенка. &laquo;Лимит скорости&raquo; позволит узнать о нарушениях скоростного режима водителем.</p>
+            </div>
+        </div>
+        <di class="row">
+            <div class="col-sm">
+                <h2>Поблагодарить</h2>
+                <p>Вы можете внести пожертвование, чтобы помочь развитию сервиса. Смотрите нашу <a href="{% url 'donate' %}">страницу пожертвований</a>, чтобы узнать больше о том, как обрабатываются пожертвования, и как они помогают нам поддерживать проект бесплатным (и свободным от рекламы!).</p>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                  <input type="hidden" name="cmd" value="_s-xclick">
+                  <input type="hidden" name="hosted_button_id" value="DN2TB2NTG7V7U">
+                  <p class="text-right"><button type="submit" class="btn btn-outline-primary" name="submit" alt="PayPal — более безопасный и легкий способ оплаты через Интернет!">Пожертвовать через PayPal</button></p>
+                </form>
+            </div>
+        </div>

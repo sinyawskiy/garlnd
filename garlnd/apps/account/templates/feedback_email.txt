@@ -1,0 +1,14 @@
+E-mail отправителя: {{ user_email }}
+
+Тема сообщения: {{ user_subject }}
+
+Сообщение:
+{{ text }}
+
+Информация о пользователе:
+{{ user_info }}
+{% if browser_info %}
+Информация о браузере:
+{{ browser_info }}
+{% endif %}
+

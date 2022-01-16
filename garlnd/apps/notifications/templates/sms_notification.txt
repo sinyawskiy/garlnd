@@ -1,0 +1,2 @@
+GARLND
+{% for notification in notifications %}{{ notification.created_at|date:'Y-m-d H:i:s' }} {{ notification.rule.title }}({{ notification.rule.get_rule_type_title }},{{ notification.rule.device }}){% endfor %}

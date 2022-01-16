@@ -1,0 +1,8 @@
+#id_action_delay input,
+#id_showing_delay input{
+    text-align: right;
+}
+
+#id_description{
+    height: 100px;
+}

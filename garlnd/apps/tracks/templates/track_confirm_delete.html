@@ -1,0 +1,5 @@
+{% extends 'confirm_delete.html' %}
+
+{% block confirm_text %}{{ block.super }} трэк &laquo;{{ object.title }}&raquo;?{% endblock %}
+
+{% block submit_button %}Удалить!{% endblock %}

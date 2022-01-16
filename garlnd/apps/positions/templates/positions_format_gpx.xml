@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xmlns="http://www.topografix.com/GPX/1/0" creator="GARLND - www.garlnd.ru" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+    <trk>
+        <name>{{ device_title }} {% now 'Y-m-d H:i:s' %}</name>
+        <trkseg>
+        {% for position in positions %}
+            <trkpt lat="{{ position.latitude|safe  }}" lon="{{ position.longitude|safe  }}"><time>{{ position.created_at|date:"Y-m-d" }}T{{ position.created_at|date:"H:i:s" }}Z</time></trkpt>
+        {% endfor %}
+        </trkseg>
+    </trk>
+</gpx>

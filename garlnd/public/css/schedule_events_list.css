@@ -1,0 +1,4 @@
+td span.schedule_dates,
+td span.schedule_execution_count{
+    cursor: pointer;
+}

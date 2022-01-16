@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load django_bootstrap5 %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/locales/bootstrap-datetimepicker.ru.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/export_form.js"></script>
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+
+{% block sub_content %}
+<h1>Экспорт трэка для {{ device.title }}</h1>
+<hr>
+<form class="form-horizontal" action="{% url 'export_positions' device.id %}" method="post">{% csrf_token %}
+    {% bootstrap_form export_form layout='horizontal' %}
+    <input type="submit" value="Экспорт" class="btn btn-primary">
+</form>
+{% endblock %}

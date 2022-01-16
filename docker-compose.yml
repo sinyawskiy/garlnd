@@ -1,0 +1,70 @@
+version: "3.3"
+
+services:
+  garlnd_db:
+    container_name: garlnd_db
+    image: postgres:11.5-alpine
+    environment:
+      POSTGRES_USER: garlnd
+      POSTGRES_PASSWORD: garlnd
+    ports:
+      - "5432:5432"
+    networks:
+      - garlnd_network
+    volumes:
+      - /tmp/pgdata:/var/lib/postgresql/data
+
+  tracking:
+    container_name: tracking
+    build: tracking/.
+    ports:
+      - "6006:6006"
+      - "5005:5005"
+      - "12300:12300"
+    volumes:
+      - ./docker_files/settings.py:/opt/tracking/settings.py
+      - ./logs/:/var/log/tracking/
+    links:
+      - garlnd_db
+    networks:
+      - garlnd_network
+
+  garlnd:
+    container_name: garlnd
+    build: garlnd/.
+    expose:
+      - "8000"
+    volumes:
+      - ./logs/:/var/log/garlnd/
+      - garlnd_static:/opt/garlnd/public/
+      - garlnd_media:/opt/garlnd/media/
+    links:
+      - garlnd_db
+    stdin_open: true
+    tty: true
+    networks:
+      - garlnd_network
+
+  nginx-proxy:
+    container_name: nginx-production
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docker_files/reverse_proxy_nginx.conf:/etc/nginx/conf.d/default.conf
+      - garlnd_static:/opt/garlnd/static
+      - garlnd_media:/opt/garlnd/media
+    links:
+      - garlnd
+    networks:
+      - garlnd_network
+
+
+volumes:
+  garlnd_media:
+  garlnd_static:
+
+networks:
+  garlnd_network:
+    driver: bridge
+

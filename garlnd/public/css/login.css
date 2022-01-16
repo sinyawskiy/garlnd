@@ -1,0 +1,44 @@
+.well{
+    max-width: 500px;
+}
+
+ul.login{
+    display: table;
+    text-align: center;
+    margin: 0 auto;
+}
+
+ul.login li{
+    padding-right:10px;
+    display: inline-block;
+}
+
+ul.login li:last-child{
+    padding-right: 0;
+}
+
+button.login{
+    margin-top: 20px;
+}
+
+ul.errorlist, legend.error{
+    color: #B94A48;
+}
+
+ul.errorlist{
+    list-style-type: none;
+}
+
+.alert a.close{
+    position:absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.alert-error{
+    position:relative;
+}
+
+img.captcha{
+    cursor: pointer;
+}

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block js %}
+    <script src="{{ STATIC_URL }}js/socket.io/socket.io.js"></script>
+    <script src="{{ STATIC_URL }}leaflet/leaflet.js"></script>
+    <script src="{{ STATIC_URL }}PruneCluster/PruneCluster.js"></script>
+    <script src="{{ STATIC_URL }}leafletlabel/js/leaflet.label.js"></script>
+    <script src="{{ STATIC_URL }}leaflet-virtual-grid/virtual-grid.js"></script>
+    <script src="{{ STATIC_URL }}js/map.js"></script>
+    <script>
+        if(typeof(Garlnd) === 'undefined'){Garlnd={};}
+        if(typeof(Garlnd.App) === 'undefined'){Garlnd.App={};}
+        Garlnd.App.locationsTypes = [{% for item in locations_types %}{ 'location_type_id': {{ item.id }}, 'title': '{{ item.title }}'}{% if not forloop.last %},{% endif %}{% endfor %}];
+        Garlnd.App.statuses = [{% for item in statuses %}{ 'status_id': {{ item.id }}, 'title': '{{ item.title }}','action': {{ item.action }}, 'showing_delay': {{ item.get_showing_delay }}, 'image': '{{ item.get_image }}'}{% if not forloop.last %},{% endif %}{% endfor %}];
+        Garlnd.App.devices = [{% for item in devices %}{ 'device_id': {{ item.id }}, 'title': '{{ item.title }}','image': '{{ item.get_image }}', 'width': {{ item.width }}, 'color': '{{ item.get_color }}'}{% if not forloop.last %},{% endif %}{% endfor %}];
+        Garlnd.App.locations = [{% for item in locations %}{ 'location_id': {{ item.id }}, 'title': '{{ item.title }}','image': '{{ item.get_image }}', 'coordinates': [{{ item.latitude|safe }}, {{ item.longitude|safe }}], 'location_type_id': {% if item.location_type_id %}{{ item.location_type_id }}{% else %}''{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}];
+        Garlnd.App.staticUrl = '{{ STATIC_URL }}';
+        Garlnd.App.webSocketPort = window.location.hostname;
+        Garlnd.App.webSocketHost = window.location.port;
+        Garlnd.App.mapId = {{ object.id }};
+        Garlnd.App.initialCenter = [{{ object.latitude|safe }}, {{ object.longitude|safe }}];
+        Garlnd.App.initialZoom = {{ object.zoom }};
+        Garlnd.App.viewPassword = '{{ object.view_password }}';
+        Garlnd.App.timeDeltaBetweenTracks = {{ time_delta_between_tracks }};
+    </script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}leaflet/leaflet.css" />
+    <link href="{{ STATIC_URL }}PruneCluster/LeafletStyleSheet.css" rel="stylesheet" type="text/css" media="screen, projection">
+    <link href="{{ STATIC_URL }}leafletlabel/css/leaflet.label.css" rel="stylesheet" type="text/css" media="screen, projection">
+    <link href="{{ STATIC_URL }}css/map.css" rel="stylesheet" type="text/css" media="screen, projection">
+{% endblock %}
+
+{% block title %}{{ block.super }} – {{ object.title }}{% endblock %}
+
+{% block navigation %}
+<nav class="navbar navbar-expand navbar-dark bg-dark flex-md-nowrap py-2 shadow">
+        <div class="container">
+            <div class="navbar-brand">
+            <div class="triangle">
+                <div class="circle one"></div>
+                <div class="circle two"></div>
+                <div class="circle three"></div>
+            </div>
+            <a class="navbar-brand brand" href="/" title="GARLND мониторинг">G&Lambda;RLND</a>
+                <span class="navbar-brand" {% if object.description %}title="{{ object.description }}"{% endif %}>{{ object.title }}</span>
+            </div>
+
+
+            <ul class="navbar-nav">
+            {% if not user.is_authenticated %}
+                {% url 'registration_register' as registration_register_url %}
+                <li class="nav-item text-nowrap{% if request.path == registration_register_url %} active{% endif %}"><a class="nav-link" href="{{ registration_register_url }}">Бесплатная регистрация</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+{#                <li{% if request.path == '/account/' %} class="active"{% endif %}><a href="/">Профиль</a></li>#}
+                {% url 'portal_auth_password_change' as portal_auth_password_change_url %}
+                <li class="nav-item text-nowrap{% if request.path == portal_auth_password_change_url %} active{% endif %}"><a class="nav-link" href="{{ portal_auth_password_change_url }}">Сменить пароль</a></li>
+                <li class="nav-item text-nowrap"><a class="nav-link" href="{% url 'logout' %}">Выход</a></li>
+            {% else %}
+                {% url 'portal_auth_password_reset' as portal_auth_password_reset_url %}
+                <li class="nav-item text-nowrap{% if request.path == portal_auth_password_reset_url %} active{% endif %}"><a class="nav-link" href="{{ portal_auth_password_reset_url }}">Восстановить пароль</a></li>
+                {% url 'login' as login_url %}
+                <li class="nav-item text-nowrap{% if request.path == login_url %} active{% endif %}"><a class="nav-link login" href="{{ login_url }}">Авторизация</a></li>
+            {% endif %}
+            </ul>
+
+        </div>
+
+</nav>
+
+{% endblock %}
+
+
+{% block container_main %}
+<div class="map_container h-100 w-100" id="map"></div>
+{% endblock %}
+
+{% block footer %}
+<footer class="footer mt-auto bg-light py-2">
+    <div class="container">
+        <ul class="foot_links">
+            <li><p class="muted "><a href="/agreement/">Пользовательское соглашение</a></p></li>
+            <li><p class="muted ">Сделано <a href="http://sinyawskiy.ru">ALS</a></p></li>
+        </ul>
+    </div>
+</footer>
+{% endblock %}

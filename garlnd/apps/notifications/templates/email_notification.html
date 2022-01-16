@@ -1,0 +1,34 @@
+{% for notification in notifications %}
+<p><b>{{ notification.created_at|date:'Y-m-d H:i:s' }}</b> произошло событие &laquo;{{ notification.rule.title }}&raquo; ({{ notification.rule.get_rule_type_title }}, {{ notification.rule.device }})</p>
+{% if notification.rule.rule_type == 1 %}
+<p>Координаты трэкера при выходе из гео-зоны:</p>
+<ul>
+    <li>Широта: {{ notification.position.latitude|floatformat:6 }}</li>
+    <li>Долгота: {{ notification.position.longitude|floatformat:6 }}</li>
+</ul>
+{% else %}
+    {% if notification.rule.rule_type == 2 %}
+    <p>Координаты трэкера при входе в гео-зону:</p>
+    <ul>
+        <li>Широта: {{ notification.position.latitude|floatformat:6 }}</li>
+        <li>Долгота: {{ notification.position.longitude|floatformat:6 }}</li>
+    </ul>
+    {% else %}
+        {% if notification.rule.rule_type == 3 %}
+        <p>Скорость при начале движения (км/ч): {{ notification.position.speed|floatformat:2 }}</p>
+        {% else %}
+            {% if notification.rule.rule_type == 4 %}
+            <ul>
+                <li>Граничная скорость (км/ч): {{ notification.rule.max_speed|floatformat:2 }}</li>
+                {%  if notification.position %}<li>Зафиксированная скорость (км/ч): {{ notification.position.speed|floatformat:2 }}</li>{% endif %}
+            </ul>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+<p>Чтобы изменить правило пройдите по ссылке:<a href="{{ protocol }}://{{ domain }}{% url 'edit_rule' notification.rule_id %}">{{ protocol }}://{{ domain }}{% url 'edit_rule' notification.rule_id %}</a></p>
+{% endfor %}
+<hr>
+<p>Это автоматическое письмо, не отвечайте на него.</p>
+<hr>
+<p>С уважением, администрация <a href="www.garlnd.ru">garlnd.ru</a></p>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>G&Lambda;RL&Lambda;ND &gt; API</title>
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen, projection">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h2>Описание API программы</h2>
+        <code>Добавление событий</code>
+        <p>Для добавления информации о событиях на площадках нужно использовать HTTP GET запрос:</p>
+        <code>http://[garland_server]/add_event/[address_event_id]/[event_type]/[service_secret]/</code>
+        <p>В квадратных скобках указаны передаваемые аргументы:</p>
+        <p><code>[garland_server]</code> доменное имя или IP адрес программы Garland</p>
+        <p><code>[event_type]</code> тип события <code>up</code> или <code>down</code></p>
+        <p><code>[address_event_id]</code> идентификатор адреса из справочника адресов</p>
+        <p><code>[service_secret]</code> пин код службы мониторинга, для идентификации службы мониторинга</p>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+</body>
+</html>

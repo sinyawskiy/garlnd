@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="h-100" lang="ru">
+<head>
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    <meta name="google-site-verification" content="F-xUUU76mAyXXYf8WEe4pLrpskglP576sa8Kt116ZXM" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="{{ STATIC_URL  }}img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+{% block header %}{% endblock %}
+{% block navigation %}
+<nav class="navbar navbar-expand navbar-dark sticky-top bg-dark flex-md-nowrap py-2 shadow">
+        <div class="container">
+            <div class="navbar-brand">
+            <div class="triangle">
+                <div class="circle one"></div>
+                <div class="circle two"></div>
+                <div class="circle three"></div>
+            </div>
+            <a class="navbar-brand brand" href="/" title="GARLND мониторинг">G&Lambda;RLND</a>
+            </div>
+
+            <ul class="navbar-nav">
+            {% if not user.is_authenticated %}
+                {% url 'registration_register' as registration_register_url %}
+                <li class="nav-item text-nowrap{% if request.path == registration_register_url %} active{% endif %}"><a class="nav-link" href="{{ registration_register_url }}">Регистрация</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+{#                <li{% if request.path == '/account/' %} class="active"{% endif %}><a href="/">Профиль</a></li>#}
+                {% url 'portal_auth_password_change' as portal_auth_password_change_url %}
+                <li class="nav-item text-nowrap{% if request.path == portal_auth_password_change_url %} active{% endif %}"><a class="nav-link" href="{{ portal_auth_password_change_url }}">Изменить пароль</a></li>
+                <li class="nav-item text-nowrap"><a class="nav-link" href="{% url 'logout' %}">Выход</a></li>
+            {% else %}
+                {% url 'login' as login_url %}
+                <li class="nav-item text-nowrap{% if request.path == login_url %} active{% endif %}"><a class="nav-link login" href="{{ login_url }}">Авторизация</a></li>
+            {% endif %}
+            </ul>
+
+        </div>
+
+</nav>
+{% endblock %}
+{% block container_main %}
+<main class="flex-shrink-0">
+    <div class="container main"><div class="row">{% block content %}{% endblock %}</div></div>
+</main>
+{% endblock %}
+{% block footer %}
+<footer class="footer mt-auto bg-light py-2">
+    <div class="container">
+        <ul class="foot_links">
+{#            <li><p class="muted"><a href="{% url 'feedback' %}">Отправить отзыв</a></p></li>#}
+            <li><p class="muted"><a href="{% url 'donate' %}">Поблагодарить</a></p></li>
+            <li><p class="muted"><a href="{% url 'agreement' %}">Пользовательское соглашение</a></p></li>
+            <li><p class="muted"><a href="http://www.help.garlnd.ru">Справка</a></p></li>
+            <li><p class="muted">Сделано <a href="http://www.sinyawskiy.ru">ALS</a></p></li>
+        </ul>
+    </div>
+</footer>
+{% endblock %}
+<script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-2.0.3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
+{% block js %}{% endblock %}
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter24623966 = new Ya.Metrika({id:24623966,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/24623966" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-49929421-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

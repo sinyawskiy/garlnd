@@ -1,0 +1,1 @@
+`docker run -i -t --entrypoint='' project_tracking /bin/bash`

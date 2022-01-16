@@ -1,0 +1,13 @@
+#map_rule{
+    position: relative;
+    height: 300px;
+    width: 570px;
+}
+
+#id_description{
+    height: 100px;
+}
+
+#id_distance_offset{
+    width: 70px;
+}

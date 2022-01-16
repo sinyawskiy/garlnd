@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load django_bootstrap5 %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}datetimepicker/js/locales/bootstrap-datetimepicker.ru.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/track_form.js"></script>
+{% endblock %}
+
+
+{% block sub_content %}
+<h1>{% if change %}Редактирование{% else %}Создание{% endif %} трэка {{ track.title }}</h1>
+<hr>
+<form class="form-horizontal" action="" enctype="multipart/form-data" data-ajax="false" method="post">
+    {% csrf_token %}
+    {% bootstrap_form track_form layout='horizontal' %}
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="{% if change %}Сохранить{% else %}Создать{% endif %}" class="btn btn-primary">
+        </div>
+    </div>
+</form>
+{% endblock %}

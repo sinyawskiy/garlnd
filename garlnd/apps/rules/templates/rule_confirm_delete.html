@@ -1,0 +1,7 @@
+{% extends 'confirm_delete.html' %}
+
+{% block confirm_text %}{{ block.super }} правило &laquo;{{ object.title }}&raquo;?{% endblock %}
+
+{% block confirm_info %}<p class="text-info">Информация обо всех инцидентах по этому правилу будет удалена.</p>{% endblock %}
+
+{% block submit_button %}Удалить!{% endblock %}

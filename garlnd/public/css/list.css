@@ -1,0 +1,30 @@
+table.vertical-middle td{
+    vertical-align: middle;
+}
+
+div.pagination a{
+    text-decoration: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-right: 12px;
+    padding-left: 12px;
+    line-height: 14px;
+}
+
+div.pagination a:hover{
+    background-color: #eeeeee;
+    color: #005580;
+}
+
+div.pagination a.disabled{
+    color: #999999;
+}
+
+div.pagination a.disabled:hover{
+    background-color: white;
+}

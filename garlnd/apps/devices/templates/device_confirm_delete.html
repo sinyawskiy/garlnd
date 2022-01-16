@@ -1,0 +1,6 @@
+{% extends 'confirm_delete.html' %}
+
+{% block confirm_text %}{{ block.super }} трэкер &laquo;{{ object.title }}&raquo;?{% endblock %}
+{% block confirm_info %}<p class="text-info">Информация об устройства, его путевых точек, трэках будет полностью удалена. Удалятся все правила с инцидентами и расписания связанные с этим устройством</p>{% endblock %}
+
+{% block submit_button %}Удалить!{% endblock %}

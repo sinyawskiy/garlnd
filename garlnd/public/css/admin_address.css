@@ -1,0 +1,23 @@
+div.col1 .grp-module{
+    min-width: 0 !important;
+}
+
+#id_address_l6{
+    width: 100%;
+}
+
+#id_address_l7, #id_address_l8, #id_address_l9, #id_address_l10{
+    width:150px;
+}
+
+div.address_map div.l-2c-fluid div.c-1{
+    display:none !important;
+}
+
+#grp-page-tools, #grp-content-title{
+    display:none;
+}
+
+#content-main ul.object-tools li{
+    text-align: right;
+}

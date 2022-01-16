@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <!-- https://developers.google.com/kml/documentation/kmlreference#gxtrack -->
+  <Document>
+    <name>{{ device_title }}</name>
+    <Snippet>{% now 'Y-m-d H:i:s' %}</Snippet>
+
+    <!-- Normal track style -->
+    {% if positions %}
+    <LookAt>
+      <gx:TimeSpan>
+        <begin>{{ positions.0.created_at|date:"Y-m-d" }}T{{ positions.0.created_at|date:"H:i:s" }}Z</begin>
+        <end>{% for position in positions %}{% if forloop.last %}{{ position.created_at|date:"Y-m-d" }}T{{ position.created_at|date:"H:i:s" }}Z{% endif %}{% endfor %}</end>
+      </gx:TimeSpan>
+      <longitude>{{ positions.0.longitude|safe }}</longitude>
+      <latitude>{{ positions.0.latitude|safe }}</latitude>
+{#      <range>0</range>#}
+    </LookAt>
+    {% endif %}
+    <Style id="track_n">
+      <IconStyle>
+        <scale>.5</scale>
+        <Icon>
+          <href>http://earth.google.com/images/kml-icons/track-directional/track-none.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+
+    </Style>
+    <!-- Highlighted track style -->
+    <Style id="track_h">
+      <IconStyle>
+        <scale>1.2</scale>
+        <Icon>
+          <href>http://earth.google.com/images/kml-icons/track-directional/track-none.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+
+    <StyleMap id="track">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#track_n</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#track_h</styleUrl>
+      </Pair>
+    </StyleMap>
+
+    <Style id="lineStyle">
+      <LineStyle>
+        <color>99ffac59</color>
+        <width>6</width>
+      </LineStyle>
+    </Style>
+    <Folder>
+      <name>Tracks</name>
+      <Placemark>
+        <name>2010-05-28T01:16:35.000Z</name>
+        <styleUrl>#track</styleUrl>
+        <gx:Track>
+          {% for position in positions %}<when>{{ position.created_at|date:"Y-m-d" }}T{{ position.created_at|date:"H:i:s" }}Z</when>{% endfor %}
+          {% for position in positions %}<gx:coord>{{ position.longitude|safe }} {{ position.latitude|safe }} 0</gx:coord>{% endfor %}
+        </gx:Track>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
