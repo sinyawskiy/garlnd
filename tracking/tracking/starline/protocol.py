@@ -29,13 +29,18 @@ def parse_stat(dec): #14 byte
     # print(len(dec))
     bat = int(bin(dec[0])[2:].zfill(8)[:-1], 2)
     power = bat == 100
+    print(power, bat, bin(dec[0])[2:].zfill(8))
+    # dec[1] = 0x0F
+    # dec[2] = 0x12
+    # dec[4] = 0x06
     return {
         'CID': str(hex(dec[-2])[2:].rjust(2, '0') + hex(dec[-1])[2:].rjust(2, '0')),
         'LAC': str(hex(dec[-4])[2:].rjust(2, '0') + hex(dec[-3])[2:].rjust(2, '0')),
         'GPRSInterval': dec[7],
         'MCC': str(dec[8]).rjust(3, '0'),
         'MNC': str(dec[9]).rjust(2, '0'),
-        'Temp': dec[4],
+        'Temp': dec[3],
+        'Balance': int(str('0x'+hex(dec[1])[2:].rjust(2, '0') + hex(dec[2])[2:].rjust(2, '0') + hex(dec[4])[2:].rjust(2, '0')), 16),
         'Bat': bat,
         'Power': power,
     }
@@ -76,17 +81,18 @@ def parse_coord(dec, lat=False): #1 byte degree 3 bytes
 
 def parse_time(dec): # 3 bytes hhmmss or hmmss
     time_str = str(int(bin(dec[0])[2:].zfill(8) + bin(dec[1])[2:].zfill(8) + bin(dec[2])[2:].zfill(8), 2))
+    # print(dec, time_str, time_str[-4:-2])
     return {
-        'second': int(time_str[4:]),
-        'minute': int(time_str[2:4]),
+        'second': int(time_str[-2:]),
+        'minute': int(time_str[-4:-2]),
         'hour': int(time_str[:-4])
     }
 
 def parse_date(dec): # 3 bytes ddmmyy or dmmyy
     date_str = str(int(bin(dec[0])[2:].zfill(8) + bin(dec[1])[2:].zfill(8) + bin(dec[2])[2:].zfill(8), 2))
     return {
-        'year': int(date_str[4:]),
-        'month': int(date_str[2:4]),
+        'year': int(date_str[-2:]),
+        'month': int(date_str[-4:-2]),
         'day': int(date_str[:-4]),
     }
 
@@ -141,6 +147,10 @@ if __name__ == '__main__':
     data = b'\x02\x00\xff\xff\x1c\x18HG<\xfa\x01\x00\xcc1/\x85\x02y\xac\x02Jj;~@\x01\x1e7!\x91\x00\x00\xab\xe2'
     data = b'\x02\x00\xff\xff\x1b\x18HG<\xfa\x01\x00\xcc12\x85\x02\xd4\xb0\x02Jj;~@\x01\x1e7!\x91\x00\x00\xab\x96'
     data = b'\x02\x00\xff\xff\x1a\x18HG<\xfa\x01\x00\xcc1/\x82\x01:t\x02qz;~J\xb1\x1e7\x1da\x00\x01?\x82\x02\x00\xff\xff\x1a\x18HG<\xfa\x01\x00\xcc1/\x82\x01:\xd8\x02qz;~J\xb1\x1e7\x1da\x00\x01?*\x02\x00\xff\xff\x1a\x18HG<\xfa\x01\x00\xcc1/\x82\x01;<\x02qz;~J\xb1\x1e7\x1da\x00\x01?\x12\x02\x00\xff\xff\x1a\x18HG<\xfa\x01\x00\xcc1/\x82\x01;\xa0\x02qz;~J\xb1\x1e7\x1da\x00\x01?\xaa'
+    data = b'\x02\x18\xff\xff\x1c\xa8HG\x1e\xfa\x01\x00\xcc12\x85\x01\xda\xa1\x02qz;~E\xf1\x1e7\x1fq\x00\x006\xf2'
+    data = b'\x02\x18\xff\xff\x1c\xa8HG\x1e\x00\x00\x00\x00\x00\x00E\x01f\xfc\x02qz;~Hq\x1e7 \xc1\x00\x01f\xfa'
+    data = b'\x02\x18\xff\xff\x1c\xa8HG\x1e\xfa\x01\x00\xcc12\x85\x01\xda\xa1\x02qz;~E\xf1\x1e7\x1fq\x00\x006\xf2'
+    deta = b'\x02\x18\xff\xff\x1b\xa8HG<\xfa\x01\x00\xcc12\x85\x01\xe2\r\x02qz;~I\xb1\x1e7!Q\x00\x01:\xbc'
     dec = [item for item in bytearray(data)]
     # bin_dec = [bin(item)[2:].zfill(8) for item in dec]
     result = parse_work(dec[1:33]) # 0-type, 33-crc
