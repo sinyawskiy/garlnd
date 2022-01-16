@@ -72,8 +72,8 @@ localhost:80
 ![Просмотр карты](https://github.com/sinyawskiy/garlnd/blob/main/readme/img/1.png?raw=true)
 
 Список трекеров
-![Список трекеров](https://github.com/sinyawskiy/garlnd/blob/main/img/2.png?raw=true)
+![Список трекеров](https://github.com/sinyawskiy/garlnd/blob/main/readme/img/2.png?raw=true)
 
 Правила по трекерам
-![Правила по трекерам](https://github.com/sinyawskiy/garlnd/blob/main/img/3.png?raw=true)
+![Правила по трекерам](https://github.com/sinyawskiy/garlnd/blob/main/readme/img/3.png?raw=true)
 
